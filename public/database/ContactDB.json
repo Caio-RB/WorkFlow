@@ -1,0 +1,26 @@
+[
+    {
+        "id":1,
+        "contact":"ti-central",
+        "number":"6966",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+    },
+    {
+        "id":2,
+        "contact":"ti-local",
+        "number":"7524",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+    },
+    {
+        "id":3,
+        "contact":"emergência",
+        "number":"1111",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+    },
+    {
+        "id":4,
+        "contact":"centro cirurgico",
+        "number":"8465",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+    }
+]

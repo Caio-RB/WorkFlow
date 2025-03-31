@@ -1,0 +1,18 @@
+
+[
+    {
+        "id":1,
+        "code": "12345",
+        "name":"dipirona"
+    },
+    {
+        "id":2,
+        "code":"67890",
+        "name":"simeticona"
+    },
+    {
+        "id":3,
+        "code":"11123",
+        "name":"paracetamol"
+    }
+]

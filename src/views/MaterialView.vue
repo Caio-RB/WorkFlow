@@ -1,5 +1,12 @@
 <script>
-
+import db from "../../public/database/MaterialDB.json"
+export default{
+  data(){
+    return{
+      materials:db
+    }
+  }
+}
 </script>
 
 <template>
@@ -18,22 +25,23 @@
 						</thead>
 						<tbody>
 							<tr class="material__row material__row--color-1">
-									<td>12345</td>
-									<td>gaze</td>
+									<td>{{ materials[0].code }}</td>
+									<td>{{ materials[0].name }}</td>
 									<td><a v-on:click="Search"><i class="bx bx-copy bx-md"></i></a></td>
 							</tr>
 							<tr class="material__row material__row--color-2">
-									<td>67890</td>
-									<td>curativo</td>
+									<td>{{ materials[1].code }}</td>
+									<td>{{ materials[1].name }}</td>
 									<td><i class="bx bx-copy bx-md"></i></td>
 							</tr>
 							<tr class="material__row material__row--color-1">
-									<td>11123</td>
-									<td>máscara</td>
+									<td>{{ materials[2].code }}</td>
+									<td>{{ materials[2].name }}</td>
 									<td><i class="bx bx-copy bx-md"></i></td>
 							</tr>
 						</tbody>
 					</table>
+          <span class="material__fab"><i class="bx bx-plus bx-md"></i></span>
 			  </div>
 </template>
 
@@ -54,7 +62,6 @@
     flex-wrap: wrap;
     flex-direction: column;
     list-style-type:none;
-    border-bottom:2px solid black;
     margin: 3vh auto 0 auto;
     text-transform: uppercase;
 }
@@ -93,5 +100,31 @@
     color:var(--tertiary-color);
     text-transform: capitalize;
 }
+.material__fab{
+    border:2px solid var(--action-color);
+    border-radius: 100%;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--action-color);
+    color:var(--tertiary-color);
+    z-index: 3;
+    position:absolute;
+    right: 0;
+    bottom:20vh;
+    box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+     margin-right: 5vw;
+}
+
+.material__fab:hover, .material__fab:active{
+    background-color:var(--active-action-color);
+    border-color: var(--active-action-color);
+}
+
 
 </style>

@@ -1,0 +1,18 @@
+
+[
+    {
+        "id":1,
+        "code": "12345",
+        "name":"gaze"
+    },
+    {
+        "id":2,
+        "code":"67890",
+        "name":"curativo"
+    },
+    {
+        "id":3,
+        "code":"11123",
+        "name":"máscara"
+    }
+]

@@ -8,10 +8,11 @@
 	--logo-color:#0037ff;
 	--action-color:#e5ff00;
 	--silent-color:#d1b287;
-		
+
 		/* Anchor states */
 	--active-link-color:#ffffff;
 	--disabled-link-color:#808080;
+  --active-action-color:#d6d305;
 
 		/*table*/
 	--table-line-1:#d3d3d3;
