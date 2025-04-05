@@ -3,7 +3,15 @@ import db from "../../public/database/MaterialDB.json"
 export default{
   data(){
     return{
-      materials:db
+      materials:db,
+      material_search:""
+    }
+  },
+  methods:{
+    filteredList(){
+      return this.materials.filter((material)=>
+      material.name.toLowerCase().includes(this.material_search.toLowerCase())
+    )
     }
   }
 }
@@ -24,20 +32,11 @@ export default{
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="material__row material__row--color-1">
-									<td>{{ materials[0].code }}</td>
-									<td>{{ materials[0].name }}</td>
+							<tr class="material__row" v-for="(material, index) in filteredList()" :key="material.id"
+              :class="{'material__row--color-1': index % 2 === 0, 'material__row--color-2': index % 2 !== 0}">
+									<td>{{ material.code }}</td>
+									<td>{{ material.name }}</td>
 									<td><a v-on:click="Search"><i class="bx bx-copy bx-md"></i></a></td>
-							</tr>
-							<tr class="material__row material__row--color-2">
-									<td>{{ materials[1].code }}</td>
-									<td>{{ materials[1].name }}</td>
-									<td><i class="bx bx-copy bx-md"></i></td>
-							</tr>
-							<tr class="material__row material__row--color-1">
-									<td>{{ materials[2].code }}</td>
-									<td>{{ materials[2].name }}</td>
-									<td><i class="bx bx-copy bx-md"></i></td>
 							</tr>
 						</tbody>
 					</table>
@@ -98,7 +97,7 @@ export default{
     outline: none;
     background-color:var(--logo-color);
     color:var(--tertiary-color);
-    text-transform: capitalize;
+    text-transform: lowercase;
 }
 .material__fab{
     border:2px solid var(--action-color);
@@ -126,5 +125,31 @@ export default{
     border-color: var(--active-action-color);
 }
 
-
+/* print section*/
+@media print{
+  .header{
+    display: none !important;
+  }
+  .menu__container{
+    display: none !important;
+  }
+  .material__search-container{
+    display: none !important;
+  }
+  #__vue-devtools-container__{
+    display: none !important;
+  }
+  .material__fab{
+    display: none !important;
+  }
+  .material{
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0;
+  }
+  .material__table{
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
 </style>

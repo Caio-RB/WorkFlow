@@ -3,137 +3,120 @@ import db from "../../public/database/ContactDB.json"
 export default{
   data(){
     return{
-      modal_visibility:false,
-      contact:db,
-      contact_search:"",
-      contact_select_section:"choice",
-      contact_select_type:"all",
-      contact__accordion:true,
+      modal_visibility: false,
+      contact: db, // Contatos completos
+      contact_filter: db, // Contatos que serão filtrados para exibição
+      contact_search: "", // Valor da pesquisa
+      contact_select_section: "choice",
+      contact_select_type: "all",
+      contact_accordion: true,
+      accordion_chevron:["bx","bx-md","chevron__button","bx-chevron-up"]
     }
   },
   methods:{
     showModal(){
-      if(this.modal_visibility == false){
-        this.modal_visibility = true;
-      }
-      else{
-        this.modal_visibility = false;
-      }
+      this.modal_visibility = !this.modal_visibility;
     },
     hiddenModal(){
       this.modal_visibility = false;
     },
     search(){
-      for (let i = 0; i < this.contact.length; i++) {
-      if (this.contact[i].contact.includes(this.contact_search)) {
-        console.log("encontrado");
-      } else {
-        console.log("não encontrado");
-      }
-     }
+        this.contact_filter = this.contact.filter(contact => {
+        return contact.contact.toLowerCase().includes(this.contact_search.toLowerCase());
+      });
+    },
+    showMoreAccordion(){
+        if(this.accordion_chevron.includes("bx-chevron-up")){
+            this.accordion_chevron.pop();
+            this.accordion_chevron.push("bx-chevron-down");
+            this.contact_accordion = false;
+        }
+        else{
+          this.accordion_chevron.pop();
+          this.accordion_chevron.push("bx-chevron-up");
+          this.contact_accordion = true;
+        }
+    }
+  },
+  watch: {
+      contact_search() {
+      this.search();
     }
   }
 }
 </script>
+
 <template>
-<div class="contact">
-            <form>
-                <div class="contact__header">
-                    <span class="contact__search-container">
-                        <i class='bx bx-search bx-md contact__search-icon'></i>
-                        <input type="text" class="contact__search" v-model="contact_search" placeholder="pesquisar" v-on:keyup="search">
-                    </span>
-                    <a href="#" class="contact__filter" @click="showModal"><i class='bx bx-filter bx-lg filter__button'></i></a>
-                </div>
+  <div class="contact">
+    <form>
+      <div class="contact__header">
+        <span class="contact__search-container">
+          <i class='bx bx-search bx-md contact__search-icon'></i>
+          <input
+            type="text"
+            class="contact__search"
+            v-model="contact_search"
+            placeholder="Pesquisar"
+          />
+        </span>
+        <a href="#" class="contact__filter" @click="showModal">
+          <i class='bx bx-filter bx-lg filter__button'></i>
+        </a>
+      </div>
 
-                <div class="contact__body">
-                    <ul class="contact__list">
-                        <li class="contact__number" v-if="contact__accordion">
-                                <div class="contact__accordion">
-                                    <p class="accordion__title">{{ contact[0].contact }}: <u>{{ contact[0].number }}</u></p>
-                                    <span class="accordion__chevron-border">
-                                        <a class="accordion__chevron"><i class='bx bx-chevron-up bx-md chevron__button'></i></a>
-                                    </span>
-                                </div>
-                                <div class="contact__accordion--active">
-                                    <p class="accordion__paragraph">{{ contact[0].content }}</p>
-                                    <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
-                                </div>
-                        </li>
+      <div class="contact__body">
+        <ul class="contact__list">
+          <!-- Exibir apenas os contatos filtrados -->
+          <li v-for="(contact, index) in contact_filter" :key="contact.id" class="contact__number">
+            <div class="contact__accordion">
+              <p class="accordion__title">
+                {{ contact.contact }}: <u>{{ contact.number }}</u>
+              </p>
+              <span class="accordion__chevron-border">
+                <a class="accordion__chevron" @click="showMoreAccordion">
+                  <i :class="accordion_chevron"></i>
+                </a>
+              </span>
+            </div>
+            <div class="contact__accordion--active" v-show="contact_accordion">
+              <p class="accordion__paragraph">{{ contact.content }}</p>
+              <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
+            </div>
+          </li>
+        </ul>
 
-                        <li class="contact__number">
-                            <div class="contact__accordion">
-                                <p class="accordion__title">{{ contact[1].contact }}: <u>{{ contact[1].number }}</u></p>
-                                <span class="accordion__chevron-border">
-                                    <a  class="accordion__chevron"><i class='bx bx-chevron-up bx-md chevron__button'></i></a>
-                                </span>
-                            </div>
-                            <div class="contact__accordion--active">
-                                <p class="accordion__paragraph">{{ contact[1].content }}</p>
-                                <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
-                            </div>
-                          </li>
+        <div class="filter__modal" id="filter-modal" v-show="modal_visibility">
+          <span class="filter__header">
+            <a class="filter__link" @click="hiddenModal">
+              <i class="bx bx-x bx-lg filter__button--close"></i>
+            </a>
+          </span>
 
-                          <li class="contact__number">
-                            <div class="contact__accordion">
-                                <p class="accordion__title">{{ contact[2].contact }}: <u>{{ contact[2].number }}</u></p>
-                                <span class="accordion__chevron-border">
-                                    <a  class="accordion__chevron"><i class='bx bx-chevron-up bx-md chevron__button'></i></a>
-                                </span>
-                            </div>
-                            <div class="contact__accordion--active">
-                                <p class="accordion__paragraph">{{ contact[2].content }}</p>
-                                <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
-                            </div>
-                          </li>
-
-                          <li class="contact__number">
-                            <div class="contact__accordion">
-                                <p class="accordion__title">{{ contact[3].contact }}: <u>{{ contact[3].number }}</u></p>
-                                <span class="accordion__chevron-border">
-                                    <a  class="accordion__chevron"><i class='bx bx-chevron-up bx-md chevron__button'></i></a>
-                                </span>
-                            </div>
-                            <div class="contact__accordion--active">
-                                <p class="accordion__paragraph">{{ contact[3].content }}</p>
-                                <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
-                            </div>
-                          </li>
-                    </ul>
-
-                    <div class="filter__modal" id="filter-modal" v-show="modal_visibility">
-                          <span class="filter__header">
-                              <a class="filter__link" @click="hiddenModal">
-                                  <i class="bx bx-x bx-lg filter__button--close"></i>
-                              </a>
-                          </span>
-
-                          <div class="filter__body">
-                                  <span class="select">
-                                      <label for="category">Setor:</label>
-                                      <select name="category" class="filter__select" v-model="contact_select_section">
-                                          <option value="choice">Escolha</option>
-                                          <option value="ti">TI</option>
-                                          <option value="emergency">Emergência</option>
-                                          <option value="hospitalization">Internação</option>
-                                      </select>
-                                  </span>
-                              <span class="select">
-                                  <label for="type">Tipo:</label>
-                                      <select name="type" class="filter__select" v-model="contact_select_type">
-                                          <option value="all">Todos</option>
-                                          <option value="landline">Fixo</option>
-                                          <option value="mobile">Móvel</option>
-                                      </select>
-                              </span>
-                              <input type="button" value="Filtrar" class="filter__apply">
-                          </div>
-                    </div>
-                </div>
-            </form>
+          <div class="filter__body">
+            <span class="select">
+              <label for="category">Setor:</label>
+              <select name="category" class="filter__select" v-model="contact_select_section">
+                <option value="choice">Escolha</option>
+                <option value="ti">TI</option>
+                <option value="emergency">Emergência</option>
+                <option value="hospitalization">Internação</option>
+              </select>
+            </span>
+            <span class="select">
+              <label for="type">Tipo:</label>
+              <select name="type" class="filter__select" v-model="contact_select_type">
+                <option value="all">Todos</option>
+                <option value="landline">Fixo</option>
+                <option value="mobile">Móvel</option>
+              </select>
+            </span>
+            <input type="button" value="Filtrar" class="filter__apply">
+          </div>
         </div>
+      </div>
+    </form>
+  </div>
 </template>
-
 <style scoped>
 .contact{
     margin-top:5vh;

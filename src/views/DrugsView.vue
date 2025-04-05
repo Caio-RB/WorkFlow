@@ -3,7 +3,16 @@ import db from "../../public/database/DrugsDB.json";
 export default{
   data(){
     return{
-      drugs:db
+      drugs:db,
+      drugs_search:"",
+      drugs_button:true
+    }
+  },
+  methods:{
+    filteredList(){
+      return this.drugs.filter((drug)=>
+        drug.name.toLowerCase().includes(this.drugs_search.toLowerCase())
+      )
     }
   }
 }
@@ -23,24 +32,19 @@ export default{
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="drugs__row drugs__row--color-1">
-									<td>{{ drugs[0].code }}</td>
-									<td>{{ drugs[0].name }}</td>
+							<tr class="drugs__row" v-for="(drug,index) in filteredList()" :key="drug.id"
+              :class="{'drugs__row--color-1':index % 2 === 0, 'drugs__row--color-2':index % 2 !== 0}">
+									<td>{{ drug.code }}</td>
+									<td>{{ drug.name }}</td>
 									<td><a v-on:click="Search"><i class="bx bx-copy bx-md"></i></a></td>
-							</tr>
-							<tr class="drugs__row drugs__row--color-2">
-									<td>{{ drugs[1].code }}</td>
-									<td>{{ drugs[1].name }}</td>
-									<td><i class="bx bx-copy bx-md"></i></td>
-							</tr>
-							<tr class="drugs__row drugs__row--color-1">
-									<td>{{ drugs[2].code }}</td>
-									<td>{{ drugs[2].name }}</td>
-									<td><i class="bx bx-copy bx-md"></i></td>
 							</tr>
 						</tbody>
 					</table>
-          <span class="drugs__fab"><i class="bx bx-plus bx-md"></i></span>
+          <div class="drugs__fab">
+              <span class="drugs__button" v-show="drugs_button"><i class="bx bx-file bx-md"></i></span>
+              <span class="drugs__button" v-show="drugs_button"><i class="bx bx-printer bx-md"></i></span>
+              <span class="drugs__button"><i class="bx bx-plus bx-md"></i></span>
+          </div>
 			  </div>
 </template>
 <style>
@@ -96,9 +100,19 @@ export default{
     outline: none;
     background-color:var(--quaternary-color);
     color:var(--tertiary-color);
-    text-transform: capitalize;
+    text-transform: lowercase;
 }
 .drugs__fab{
+  display:flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items: center;
+  position:absolute;
+  right: 1rem;
+  height: 30vh;
+  bottom: 20vh;
+}
+ .btn{
     border:2px solid var(--action-color);
     border-radius: 100%;
     height: 3rem;
@@ -118,8 +132,22 @@ export default{
     -moz-box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
      margin-right: 5vw;
 }
-
-.drugs__fab:hover, .drugs__fab:active{
+.drugs__button{
+    border:2px solid var(--action-color);
+    border-radius: 100%;
+    height: 3rem;
+    width: 3rem;
+    background-color: var(--action-color);
+    color:var(--tertiary-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 10px 11px 0px rgba(0,0,0,0.75);
+}
+.drugs__button:hover, .drugs__button:active{
     background-color:var(--active-action-color);
     border-color: var(--active-action-color);
 }
