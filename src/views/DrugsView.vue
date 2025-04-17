@@ -13,6 +13,9 @@ export default{
       return this.drugs.filter((drug)=>
         drug.name.toLowerCase().includes(this.drugs_search.toLowerCase())
       )
+    },
+    printPage(){
+      print()
     }
   }
 }
@@ -42,7 +45,7 @@ export default{
 					</table>
           <div class="drugs__fab">
               <span class="drugs__button" v-show="drugs_button"><i class="bx bx-file bx-md"></i></span>
-              <span class="drugs__button" v-show="drugs_button"><i class="bx bx-printer bx-md"></i></span>
+              <span class="drugs__button" v-show="drugs_button" @click="printPage()"><i class="bx bx-printer bx-md"></i></span>
               <span class="drugs__button"><i class="bx bx-plus bx-md"></i></span>
           </div>
 			  </div>
@@ -150,5 +153,36 @@ export default{
 .drugs__button:hover, .drugs__button:active{
     background-color:var(--active-action-color);
     border-color: var(--active-action-color);
+}
+/* print section*/
+@media print{
+  body{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  .header{
+    display: none !important;
+  }
+  .menu__container{
+    display: none !important;
+  }
+  .drugs__search-container{
+    display: none !important;
+  }
+  #__vue-devtools-container__{
+    display: none !important;
+  }
+  .drugs__fab{
+    display: none !important;
+  }
+  .drugs{
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0;
+  }
+  .drugs__table{
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
 </style>

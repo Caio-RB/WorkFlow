@@ -3,24 +3,42 @@
         "id":1,
         "contact":"ti-central",
         "number":"6966",
-        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
     },
     {
         "id":2,
         "contact":"ti-local",
         "number":"7524",
-        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
     },
     {
         "id":3,
         "contact":"emergência",
         "number":"1111",
-        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
     },
     {
         "id":4,
-        "contact":"centro cirurgico",
+        "contact":"centro cirúrgico",
         "number":"8465",
-        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis"
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
+    },
+    {
+        "id":5,
+        "contact":"internação - 1°setor",
+        "number":"6872",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
+    },
+    {
+        "id":6,
+        "contact":"internação - 2°setor",
+        "number":"5372",
+        "content":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis",
+        "isOpen":true
     }
 ]

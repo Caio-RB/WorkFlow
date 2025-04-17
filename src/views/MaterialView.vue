@@ -12,6 +12,10 @@ export default{
       return this.materials.filter((material)=>
       material.name.toLowerCase().includes(this.material_search.toLowerCase())
     )
+    },
+    copyMaterialCode(material){
+        navigator.clipboard.writeText(material.code);
+        window.alert("Código copiado!");
     }
   }
 }
@@ -36,7 +40,7 @@ export default{
               :class="{'material__row--color-1': index % 2 === 0, 'material__row--color-2': index % 2 !== 0}">
 									<td>{{ material.code }}</td>
 									<td>{{ material.name }}</td>
-									<td><a v-on:click="Search"><i class="bx bx-copy bx-md"></i></a></td>
+									<td><a @click="copyMaterialCode(material)"><i class="bx bx-copy bx-md"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -127,6 +131,11 @@ export default{
 
 /* print section*/
 @media print{
+  body{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+
   .header{
     display: none !important;
   }
@@ -146,10 +155,12 @@ export default{
     width: 100vw !important;
     height: 100vh !important;
     margin: 0;
+    overflow:visible;
   }
   .material__table{
     width: 100% !important;
     height: 100% !important;
+    margin: 0;
   }
 }
 </style>

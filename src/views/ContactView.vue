@@ -4,13 +4,12 @@ export default{
   data(){
     return{
       modal_visibility: false,
-      contact: db, // Contatos completos
-      contact_filter: db, // Contatos que serão filtrados para exibição
-      contact_search: "", // Valor da pesquisa
+      contact: db,
+      contact_filter: db,
+      contact_search: "",
       contact_select_section: "choice",
       contact_select_type: "all",
-      contact_accordion: true,
-      accordion_chevron:["bx","bx-md","chevron__button","bx-chevron-up"]
+      contact_accordion: true
     }
   },
   methods:{
@@ -25,17 +24,18 @@ export default{
         return contact.contact.toLowerCase().includes(this.contact_search.toLowerCase());
       });
     },
-    showMoreAccordion(){
-        if(this.accordion_chevron.includes("bx-chevron-up")){
-            this.accordion_chevron.pop();
-            this.accordion_chevron.push("bx-chevron-down");
-            this.contact_accordion = false;
-        }
-        else{
-          this.accordion_chevron.pop();
-          this.accordion_chevron.push("bx-chevron-up");
-          this.contact_accordion = true;
-        }
+    showMoreAccordion(contact){
+       contact.isOpen = !contact.isOpen;
+
+      if (contact.isOpen) {
+        contact.chevronClass = "bx-chevron-down";
+      } else {
+        contact.chevronClass = "bx-chevron-up";
+      }
+    },
+    copyContactNumber(contact){
+      navigator.clipboard.writeText(contact.number);
+      window.alert("Número copiado!");
     }
   },
   watch: {
@@ -66,28 +66,27 @@ export default{
 
       <div class="contact__body">
         <ul class="contact__list">
-          <!-- Exibir apenas os contatos filtrados -->
           <li v-for="(contact, index) in contact_filter" :key="contact.id" class="contact__number">
             <div class="contact__accordion">
               <p class="accordion__title">
                 {{ contact.contact }}: <u>{{ contact.number }}</u>
               </p>
               <span class="accordion__chevron-border">
-                <a class="accordion__chevron" @click="showMoreAccordion">
-                  <i :class="accordion_chevron"></i>
+                <a class="accordion__chevron" @click="showMoreAccordion(contact)">
+                  <i :class="['bx','bx-md','chevron__button',contact.isOpen ? 'bx-chevron-up':'bx-chevron-down']"></i>
                 </a>
               </span>
             </div>
-            <div class="contact__accordion--active" v-show="contact_accordion">
+            <div class="contact__accordion--active" v-show="contact.isOpen">
               <p class="accordion__paragraph">{{ contact.content }}</p>
-              <a class="copy" href="#"><i class="bx bx-copy bx-md"></i></a>
+              <a class="copy" href="#" @click="copyContactNumber(contact)"><i class="bx bx-copy bx-md"></i></a>
             </div>
           </li>
         </ul>
 
         <div class="filter__modal" id="filter-modal" v-show="modal_visibility">
           <span class="filter__header">
-            <a class="filter__link" @click="hiddenModal">
+            <a class="filter__link" @click="hiddenModal()">
               <i class="bx bx-x bx-lg filter__button--close"></i>
             </a>
           </span>
@@ -117,7 +116,7 @@ export default{
     </form>
   </div>
 </template>
-<style scoped>
+<style>
 .contact{
     margin-top:5vh;
     width:100vw;
@@ -205,6 +204,7 @@ export default{
     color:var(--tertiary-color);
     font-weight: bold;
     margin-left: 2vw;
+    text-transform: uppercase;
 }
 .accordion__paragraph{
     width: 80%;
@@ -287,5 +287,29 @@ export default{
 }
 .filter__apply:active{
     background-color: var(--logo-color);
+}
+@media print{
+  body{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  .contact{
+    margin:0;
+    width:100vw;
+    height: 100vh !important;
+    overflow: visible !important;
+}
+  .contact__header{
+    display: none;
+  }
+  .header{
+    display: none !important;
+  }
+  .menu__container{
+    display: none !important;
+  }
+  #__vue-devtools-container__{
+    display: none !important;
+  }
 }
 </style>
