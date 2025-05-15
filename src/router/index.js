@@ -24,7 +24,11 @@ const router = createRouter({
       name:"drugs",
       component: ()=> import("../views/DrugsView.vue")
     },
-    
+    {
+      path:"/drugs/request",
+      name:"drugs request",
+      component: ()=> import("../views/DrugsRequestView.vue")
+    }
 
   ],
 })

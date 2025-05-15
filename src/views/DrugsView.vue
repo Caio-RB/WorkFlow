@@ -15,7 +15,8 @@ export default{
       )
     },
     printPage(){
-      print()
+      const table = document.getElementsByClassName("drugs__table")[0];
+      html2pdf(table);
     }
   }
 }
@@ -44,13 +45,13 @@ export default{
 						</tbody>
 					</table>
           <div class="drugs__fab">
-              <span class="drugs__button" v-show="drugs_button"><i class="bx bx-file bx-md"></i></span>
+              <span class="drugs__button" v-show="drugs_button"><RouterLink to="/drugs/request" class="drugs__link"><i class="bx bx-file bx-md"></i></RouterLink></span>
               <span class="drugs__button" v-show="drugs_button" @click="printPage()"><i class="bx bx-printer bx-md"></i></span>
               <span class="drugs__button"><i class="bx bx-plus bx-md"></i></span>
           </div>
 			  </div>
 </template>
-<style>
+<style scoped>
 .drugs{
     margin-top:5vh;
     width:100vw;
@@ -153,6 +154,9 @@ export default{
 .drugs__button:hover, .drugs__button:active{
     background-color:var(--active-action-color);
     border-color: var(--active-action-color);
+}
+.drugs__link{
+  color:var(--tertiary-color);
 }
 /* print section*/
 @media print{
